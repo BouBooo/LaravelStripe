@@ -194,3 +194,9 @@
 <!--================End Cart Area =================-->
 
 @stop
+
+@section('js')
+<script>
+    console.log('hello cart page')
+    </script>
+@stop

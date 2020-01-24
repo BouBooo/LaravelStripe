@@ -42,6 +42,7 @@ card.addEventListener('change', function(event) {
 var form = document.getElementById('payment-form');
 form.addEventListener('submit', function(event) {
   event.preventDefault();
+  document.getElementById('complete-order').disabled = true;
 
   var options = {
       name: document.getElementById('name_on_card').value,
@@ -56,6 +57,8 @@ form.addEventListener('submit', function(event) {
       // Inform the user if there was an error.
       var errorElement = document.getElementById('card-errors');
       errorElement.textContent = result.error.message;
+      document.getElementById('complete-order').disabled = false;
+      
     } else {
       // Send the token to your server.
       stripeTokenHandler(result.token);

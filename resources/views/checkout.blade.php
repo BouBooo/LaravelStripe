@@ -28,23 +28,23 @@
                     <form class="row contact_form" action="{{ route('checkout.store') }}" method="POST" id="payment-form">
                         {{ csrf_field() }}
                         <div class="col-md-6 form-group p_star">
-                            <input type="text" class="form-control" id="email" name="email">
+                            <input type="text" class="form-control" id="email" name="email" required>
                             <span class="placeholder" data-placeholder="Email Address"></span>
                         </div>
                         <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="province" name="province">
+                            <input type="text" class="form-control" id="province" name="province" required>
                             <span class="placeholder" data-placeholder="Country"></span>
                         </div>
                         <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="address" name="address">
+                            <input type="text" class="form-control" id="address" name="address" required>
                             <span class="placeholder" data-placeholder="Address line 01"></span>
                         </div>
                         <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="city" name="city">
+                            <input type="text" class="form-control" id="city" name="city" required>
                             <span class="placeholder" data-placeholder="Town/City"></span>
                         </div>
                         <div class="col-md-12 form-group">
-                            <input type="text" class="form-control" id="postalcode" name="postalcode" placeholder="Postcode/ZIP">
+                            <input type="text" class="form-control" id="postalcode" name="postalcode" placeholder="Postcode/ZIP" required>
                         </div>
                         <div class="col-md-12 form-group">
                             <div class="creat_account">
@@ -61,7 +61,7 @@
                                 <div id="card-errors" role="alert"></div>
                             </div>
                         </div>
-                        <button type="submit" class="primary-btn my-3">Proceed to Paiement</button>
+                        <button id="complete-order" type="submit" class="primary-btn my-3">Proceed to Paiement</button>
                     </form>
                 </div>
                 <div class="col-lg-4">

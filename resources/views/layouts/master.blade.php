@@ -46,6 +46,8 @@
 		@yield('content')
 		
 		@include('layouts.footer')
+
+		@yield('js')
 	</div>
 	
     <script src="https://js.stripe.com/v3/"></script>
