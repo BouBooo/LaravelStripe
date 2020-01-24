@@ -18,14 +18,25 @@ class ShopController extends Controller
     
     public function index()
     {
-        if(request()->category) {
-            $products = Product::with('categories')->whereHas('categories', function ($query) {
-                $query->where('slug', request()->category);
-            })->get();
-        } else {
-            $products = Product::all();
-        }
+        $pagination = 2;
         $categories = Category::all();
+
+        if(request()->category) {
+            $category = Category::where('slug', request()->category)->get();
+            $products = Product::where('category_id', $category[0]->id);
+        } else {
+            $products = Product::take(4);
+        }
+
+        if(request()->sort == 'low_high') {
+            $products = $products->orderBy('price')->paginate($pagination);
+        }
+        else if (request()->sort == 'high_low') {
+            $products = $products->orderBy('price', 'DESC')->paginate($pagination);
+        }
+        else {
+            $products = $products->paginate($pagination);
+        }
         
         return view('shop', [ 
             'products' => $products,
