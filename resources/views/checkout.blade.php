@@ -18,6 +18,18 @@
 </section>
 <!-- End Banner Area -->
 
+<div class="container">
+    @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+</div>
+
 <!--================Checkout Area =================-->
 <section class="checkout_area section_gap">
     <div class="container">
@@ -80,10 +92,37 @@
                             @endforeach
                         </ul>
                         <ul class="list list_2">
-                            <li><a href="#">Subtotal <span>$ {{ Cart::subtotal()}}</span></a></li>
-                            <li><a href="#">Tax <span>$ {{ Cart::tax() }}</span></a></li>
-                            <li><a href="#">Total <span>$ {{ Cart::total()}}</span></a></li>
+                            <li><a href="#">Subtotal <span>$ {{ Cart::subtotal()}}</span></a></li>      
+                            @if (session()->has('coupon'))
+                            <li>
+                                <a href="#">Discount ({{ session()->get('coupon')['name']}})<span>- $ {{ $discount }}</span></a>
+                                <form action="{{ route('coupon.destroy') }}" method="POST">
+                                    {{ csrf_field() }}
+                                    {{ method_field('delete') }}
+                                    <button class="btn" type="submit"><i class="fas fa-trash"></i></button>
+                                </form>
+                            </li>
+                            <li><a href="#">New subtitle <span>$ {{ $subtotal }}</span></a></li>
+                            @endif
+                             
+                            <li><a href="#">Tax <span>$ {{ $newTax }}</span></a></li> 
+                            <hr>
+                            <li><a href="#">Total <span>$ {{ $total }}</span></a></li>
                         </ul>
+                    </div>
+                    <div class="coupon my-3">
+                        <div class="code">
+                            <p>Have a code ?</p>
+                            <form action="{{ route('coupon.store') }}" method="POST">
+                                {{ csrf_field() }}
+                                <div class="d-flex  align-items-center contact_form">
+                                    <input type="text" name="coupon_code" id="coupon_code" class="form-control" placeholder="Coupon Code">
+                                    <button class="primary-btn my-3" type="submit">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

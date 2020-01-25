@@ -16,7 +16,14 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        return view('checkout');
+        // dd($tax, $discount, $subtotal, $newTax, $total); 
+        return view('checkout', [
+            'tax' => $this->paiementInfos()->get('tax'),
+            'discount' => $this->paiementInfos()->get('discount'),
+            'subtotal' => $this->paiementInfos()->get('subtotal'),
+            'newTax' => $this->paiementInfos()->get('newTax'),
+            'total' => $this->paiementInfos()->get('total')
+        ]);
     }
 
     /**
@@ -45,17 +52,21 @@ class CheckoutController extends Controller
 
         try {
             $charge = \Stripe\Charge::create([
-                'amount' => Cart::total() * 100,
+                'amount' => $this->paiementInfos()->get('total') * 100,
                 'currency' => 'eur',
                 'description' => 'My Website Order',
                 'source' => $request->stripeToken,
                 'receipt_email' => $request->email,
                 'metadata' => [
                     'contents' => $contents,
-                    'quantity' => Cart::instance('default')->count()
+                    'quantity' => Cart::instance('default')->count(),
+                    'discount' => collect(session()->get('coupon'))->toJson()
                 ]
             ]); 
+            
             Cart::instance('default')->destroy();
+            session()->forget('coupon');
+
             return redirect()->route('checkout.success')->with('success_message', 'Payement has been accepted with success !');
         }
         catch(\Stripe\Exception\CardErrorException $e) {
@@ -110,5 +121,21 @@ class CheckoutController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function paiementInfos() {
+        $tax = config('cart.tax') / 100;
+        $discount = session()->get('coupon')['discount'] ?? 0;
+        $subtotal = (Cart::subtotal() - $discount);
+        $newTax = $subtotal * $tax;
+        $total = $subtotal * (1 + $tax);
+
+        return collect([
+            'tax' => $tax,
+            'discount' => $discount,
+            'subtotal' => $subtotal,
+            'newTax' => $newTax,
+            'total' => $total
+        ]);
     }
 }

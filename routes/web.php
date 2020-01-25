@@ -32,3 +32,7 @@ Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
 Route::post('/checkout', 'CheckoutController@store')->name('checkout.store');
 Route::get('/payement-success', 'ConfirmationController@index')->name('checkout.success');
 
+// Coupons
+Route::post('/coupon', 'CouponsController@store')->name('coupon.store');
+Route::delete('/coupon', 'CouponsController@destroy')->name('coupon.destroy');
+
