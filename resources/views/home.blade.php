@@ -121,7 +121,7 @@
                     @foreach ($products as $product)
                     <div class="col-lg-3 col-md-6">
 						<div class="single-product">
-							<img class="img-fluid" src="{{ asset('img/products/'.$product->slug.'.jpg') }}" alt="">
+							<img class="img-fluid" src="{{ Voyager::image($product->image) }}" alt="">
 							<div class="product-details">
 								<h6>{{ $product->name }}</h6>
 								<div class="price">

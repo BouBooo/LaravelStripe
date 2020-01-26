@@ -53,7 +53,7 @@
                                 <div class="media">
                                     <div class="d-flex">
                                         <a href="{{ route('shop.show', $product->model->slug) }}">
-                                            <img class="img-thumbnail w-20" src="{{ asset('img/products/'.$product->model->slug.'.jpg') }}" alt="">
+                                            <img class="img-thumbnail w-20" src="{{ Voyager::image($product->model->image) }}" alt="">
                                         </a>
                                     </div>
                                 </div>
@@ -162,7 +162,7 @@
                     @foreach (Cart::instance('saveForLater')->content() as $product)
                     <div class="col-lg-3 col-md-6">
                         <div class="single-product">
-                            <img class="img-fluid" src="{{ asset('img/products/'.$product->model->slug.'.jpg') }}" alt="">
+                            <img class="img-fluid" src="{{ Voyager::image($product->image) }}" alt="">
                             <div class="product-details">
                                 <h6>{{ $product->model->name }}</h6>
                                 <div class="price">

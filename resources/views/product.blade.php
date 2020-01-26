@@ -26,15 +26,14 @@
             <div class="col-lg-6">
                 <div class="s_Product_carousel">
                     <div class="single-prd-item">
-                        <img class="img-fluid" src="{{ asset('img/products/'.$product->slug.'.jpg') }}" alt="">
+                        <img class="img-fluid" src="{{ Voyager::image($product->image) }}" alt="">
                     </div>
-                    <div class="single-prd-item">
-                        <img class="img-fluid" src="{{ asset('img/products/'.$product->slug.'.jpg') }}" alt="">
-                    </div>
-                    <div class="single-prd-item">
-                        <img class="img-fluid" src="{{ asset('img/products/'.$product->slug.'.jpg') }}" alt="">
-                    </div>
+                    @foreach (json_decode($product->images, true) as $img)
+                        <img class="img-fluid" src="{{ Voyager::image($img) }}" alt="">
+                    @endforeach
                 </div>
+                {{-- {{ dd($product) }} --}}
+                
             </div>
             <div class="col-lg-5 offset-lg-1">
                 <div class="s_product_text">
