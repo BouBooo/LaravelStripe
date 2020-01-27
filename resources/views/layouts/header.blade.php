@@ -4,7 +4,7 @@
         <nav class="navbar navbar-expand-lg navbar-light main_box">
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
-                <a class="navbar-brand logo_h" href="{{ route('home') }}"><img src="{{ asset('img/logo.png')}}" alt=""></a>
+                <a class="navbar-brand logo_h mr-5" href="{{ route('home') }}"><img src="{{ asset('img/logo.png')}}" alt=""></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="icon-bar"></span>
@@ -13,9 +13,19 @@
                 </button>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-                    <ul class="nav navbar-nav menu_nav ml-auto">
+                    <ul class="nav navbar-nav menu_nav mr-auto ml-5">
                         <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('shop.index') }}">Shop</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav menu_nav ml-auto">
+                        @guest
+                            <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Sign Up</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
+                        @else 
+                            <li class="nav-item"><a class="nav-link" href="{{ route('logout') }}">Logout</a></li>
+                        @endguest
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('cart.index') }}">
                                 Cart
@@ -24,16 +34,6 @@
                                 @endif
                             </a>
                         </li>
-                        <li class="nav-item submenu dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                             aria-expanded="false">Pages</a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
-                                <li class="nav-item"><a class="nav-link" href="tracking.html">Tracking</a></li>
-                                <li class="nav-item"><a class="nav-link" href="elements.html">Elements</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>

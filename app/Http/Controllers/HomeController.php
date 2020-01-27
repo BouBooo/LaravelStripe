@@ -2,21 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
 
 class HomeController extends Controller
 {
-    public function home()
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
     {
-        // dd(View::exists('home'));
-        $products = Product::inRandomOrder()->take(4)->get();
-        return view('home', ['products' => $products]);
+        $this->middleware('auth');
     }
 
-    public function contact()
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        return view('contact');
+        return view('home');
     }
 }
