@@ -91,24 +91,6 @@
                             </td>
                         </tr>
                         @endforeach
-                        <tr class="bottom_button">
-                            <td>
-                                <a class="gray_btn" href="#">Update Cart</a>
-                            </td>
-                            <td>
-
-                            </td>
-                            <td>
-
-                            </td>
-                            <td>
-                                <div class="cupon_text d-flex align-items-center">
-                                    <input type="text" placeholder="Coupon Code">
-                                    <a class="primary-btn" href="#">Apply</a>
-                                    <a class="gray_btn" href="#">Close Coupon</a>
-                                </div>
-                            </td>
-                        </tr>
                         <tr>
                             <td>
 
@@ -138,14 +120,15 @@
 
                             </td>
                             <td>
-                                <div class="checkout_btn_inner d-flex align-items-center">
-                                    <a class="gray_btn" href="{{ route('shop.index') }}">Continue Shopping</a>
-                                    <a class="primary-btn" href="{{ route('checkout.index') }}">Proceed to checkout</a>
-                                </div>
+                                
                             </td>
                         </tr>
                     </tbody>
                 </table>
+                <div class="checkout_btn_inner d-flex align-items-center justify-content-around mb-3">
+                    <a class="gray_btn" href="{{ route('shop.index') }}">Continue Shopping</a>
+                    <a class="primary-btn" href="{{ route('checkout.index') }}">Proceed to checkout</a>
+                </div>
             </div>
             @else
                 <h3 class="my-3 text-center">No item in shopping cart</h3>

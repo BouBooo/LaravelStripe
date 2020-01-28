@@ -55,41 +55,26 @@ class CheckoutController extends Controller
                     'discount' => collect(session()->get('coupon'))->toJson()
                 ]
             ]); 
-
-            // dd($request);
-
-            $order = Order::create([
-                'user_id' => auth()->user()->id,
-                'paiement_email' => $request->email,
-                'paiement_country' => $request->province,
-                'paiement_address' => $request->address,
-                'paiement_city' => $request->city,
-                'paiement_card_name' => $request->name_on_card,
-                'paiement_discount' => session()->get('coupon')['name'] ?? null,
-                'paiement_subtotal' => $this->paiementInfos()->get('subtotal'),
-                'paiement_tax' => $this->paiementInfos()->get('newTax'),
-                'paiement_total' => $this->paiementInfos()->get('total')
-            ]);
-
-            foreach(Cart::content() as $item) {
-                OrderProduct::create([
-                    'order_id' => $order->id,
-                    'product_id' => $item->id,
-                    'quantity' => $item->qty
-                ]);
-            }
             
+            $this->createOrder($request);
+        
             Cart::instance('default')->destroy();
             session()->forget('coupon');
 
             return redirect()->route('checkout.success')->with('success_message', 'Payement has been accepted with success !');
         }
         catch(\Stripe\Exception\CardErrorException $e) {
-            return back()->withErrors('Error! ' . $e->getMessage());
+            throw $e;
         }
     }
 
     public function success() {
+        if(!session()->has('success_message')) {
+            return redirect()->route('home');
+        }
+        
+        $order = Order::latest()->first();
+        dd($order);
         return view('thanks');
     }
 
@@ -108,5 +93,28 @@ class CheckoutController extends Controller
             'newTax' => $newTax,
             'total' => $total
         ]);
+    }
+
+    private function createOrder($request) {
+        $order = Order::create([
+            'user_id' => auth()->user()->id,
+            'paiement_email' => $request->email,
+            'paiement_country' => $request->province,
+            'paiement_address' => $request->address,
+            'paiement_city' => $request->city,
+            'paiement_card_name' => $request->name_on_card,
+            'paiement_discount' => session()->get('coupon')['name'] ?? null,
+            'paiement_subtotal' => $this->paiementInfos()->get('subtotal'),
+            'paiement_tax' => $this->paiementInfos()->get('newTax'),
+            'paiement_total' => $this->paiementInfos()->get('total')
+        ]);
+
+        foreach(Cart::content() as $item) {
+            OrderProduct::create([
+                'order_id' => $order->id,
+                'product_id' => $item->id,
+                'quantity' => $item->qty
+            ]);
+        }
     }
 }

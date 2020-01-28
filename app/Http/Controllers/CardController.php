@@ -50,8 +50,11 @@ class CardController extends Controller
     }
 
     public function saveForLater($id) {
-        $item = Cart::get($id);
-        Cart::remove($id);
+        dd($cartItem);
+        if($cartItem) {
+            $item = Cart::get($id);
+            Cart::remove($id);
+        }
 
         Cart::instance('saveForLater')->add($item->id, $item->name, 1, $item->price)->associate('App\Product');
 

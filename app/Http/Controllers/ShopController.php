@@ -11,14 +11,16 @@ class ShopController extends Controller
     public function show($slug)
     {
         $product = Product::where('slug', $slug)->firstOrFail();
+        $category = Category::where('id', $product->category_id)->firstOrFail();
         return view('product', [ 
             'product' => $product,
+            'category' => $category
         ]);
     }
     
     public function index()
     {
-        $pagination = 2;
+        $pagination = 3;
         $categories = Category::all();
 
         if(request()->category) {

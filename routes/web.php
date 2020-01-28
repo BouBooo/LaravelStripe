@@ -30,7 +30,7 @@ Route::post('/save/later/{product}', 'SaveForLaterController@addToCart')->name('
 // Checkout
 Route::get('/checkout', 'CheckoutController@index')->name('checkout.index')->middleware('auth');
 Route::post('/checkout', 'CheckoutController@store')->name('checkout.store');
-Route::get('/payement-success', 'ConfirmationController@index')->name('checkout.success');
+Route::get('/payement-success', 'CheckoutController@success')->name('checkout.success');
 
 // Coupons
 Route::post('/coupon', 'CouponsController@store')->name('coupon.store');
