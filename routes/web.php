@@ -28,7 +28,7 @@ Route::delete('/save/{product}', 'SaveForLaterController@destroy')->name('saveFo
 Route::post('/save/later/{product}', 'SaveForLaterController@addToCart')->name('saveForLater.later');
 
 // Checkout
-Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
+Route::get('/checkout', 'CheckoutController@index')->name('checkout.index')->middleware('auth');
 Route::post('/checkout', 'CheckoutController@store')->name('checkout.store');
 Route::get('/payement-success', 'ConfirmationController@index')->name('checkout.success');
 
@@ -44,4 +44,13 @@ Route::group(['prefix' => 'admin'], function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
+
+
+Route::get('logout', function ()
+{
+    auth()->logout();
+    Session()->flush();
+
+    return Redirect::to('/');
+})->name('logout');
