@@ -26,7 +26,7 @@ class CreateOrdersTable extends Migration
             $table->string('paiement_subtotal');
             $table->string('paiement_tax');
             $table->string('paiement_total');
-            $table->string('error');
+            $table->string('error')->nullable();
 
             $table->timestamps();
         });

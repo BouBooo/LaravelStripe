@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
+use App\OrderProduct;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Http\Requests\CheckoutRequest;
@@ -24,16 +26,6 @@ class CheckoutController extends Controller
             'newTax' => $this->paiementInfos()->get('newTax'),
             'total' => $this->paiementInfos()->get('total')
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -63,6 +55,29 @@ class CheckoutController extends Controller
                     'discount' => collect(session()->get('coupon'))->toJson()
                 ]
             ]); 
+
+            // dd($request);
+
+            $order = Order::create([
+                'user_id' => auth()->user()->id,
+                'paiement_email' => $request->email,
+                'paiement_country' => $request->province,
+                'paiement_address' => $request->address,
+                'paiement_city' => $request->city,
+                'paiement_card_name' => $request->name_on_card,
+                'paiement_discount' => session()->get('coupon')['name'] ?? null,
+                'paiement_subtotal' => $this->paiementInfos()->get('subtotal'),
+                'paiement_tax' => $this->paiementInfos()->get('newTax'),
+                'paiement_total' => $this->paiementInfos()->get('total')
+            ]);
+
+            foreach(Cart::content() as $item) {
+                OrderProduct::create([
+                    'order_id' => $order->id,
+                    'product_id' => $item->id,
+                    'quantity' => $item->qty
+                ]);
+            }
             
             Cart::instance('default')->destroy();
             session()->forget('coupon');
@@ -78,50 +93,6 @@ class CheckoutController extends Controller
         return view('thanks');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 
     private function paiementInfos() {
         $tax = config('cart.tax') / 100;
