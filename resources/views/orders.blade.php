@@ -20,6 +20,13 @@
         <h2 class="text-center">Orders Details</h2>
         @foreach($orders as $order)
         <div class="table-responsive order_details_table">
+            <div class="d-flex justify-content-between my-5 px-5">
+                <h4>
+                    <i class="fas fa-receipt"></i>
+                    Order #{{ $order->id }}
+                </h4>
+                <h4>Date : {{ $order->created_at }}</h4>
+            </div>
             <table class="table">
                 <thead>
                     <tr>
