@@ -58,9 +58,6 @@ class CheckoutController extends Controller
             
             $this->createOrder($request);
         
-            Cart::instance('default')->destroy();
-            session()->forget('coupon');
-
             return redirect()->route('checkout.success')->with('success_message', 'Payement has been accepted with success !');
         }
         catch(\Stripe\Exception\CardErrorException $e) {
@@ -72,10 +69,15 @@ class CheckoutController extends Controller
         if(!session()->has('success_message')) {
             return redirect()->route('home');
         }
-        
+
         $order = Order::latest()->first();
-        dd($order);
-        return view('thanks');
+        $products = Cart::content();
+        Cart::destroy();
+        
+        return view('thanks', [
+            'order' => $order,
+            'products' => $products
+        ]);
     }
 
 
@@ -102,12 +104,15 @@ class CheckoutController extends Controller
             'paiement_country' => $request->province,
             'paiement_address' => $request->address,
             'paiement_city' => $request->city,
+            'paiement_postalcode' => $request->postalcode,
             'paiement_card_name' => $request->name_on_card,
             'paiement_discount' => session()->get('coupon')['name'] ?? null,
             'paiement_subtotal' => $this->paiementInfos()->get('subtotal'),
             'paiement_tax' => $this->paiementInfos()->get('newTax'),
             'paiement_total' => $this->paiementInfos()->get('total')
         ]);
+
+        // dd($order);
 
         foreach(Cart::content() as $item) {
             OrderProduct::create([

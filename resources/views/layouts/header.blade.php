@@ -14,23 +14,57 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                     <ul class="nav navbar-nav menu_nav mr-auto ml-5">
-                        <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('shop.index') }}">Shop</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('home') }}">
+                                <i class="fas fa-home"></i>
+                                Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('shop.index') }}">
+                                <i class="fas fa-shopping-bag"></i>
+                                Shop
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('contact') }}">
+                                <i class="fas fa-envelope"></i>
+                                Contact
+                            </a>
+                        </li>
                     </ul>
                     <ul class="nav navbar-nav menu_nav ml-auto">
                         @guest
-                            <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Sign Up</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register') }}">
+                                    <i class="fas fa-user-plus"></i>
+                                    Sign Up
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    Login
+                                </a>
+                            </li>
                         @else 
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('logout') }}">Logout
+                                <a class="nav-link" href="{{ route('orders') }}">
+                                    <i class="fas fa-truck"></i>
+                                    Orders
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('logout') }}">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Logout
                                 </a>
                             </li>
                         @endguest
                         
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('cart.index') }}">
+                                <i class="fas fa-shopping-cart"></i>
                                 Cart
                                 @if (Cart::instance('default')->count() > 0)
                                 <span class="badge badge-primary">{{ Cart::instance('default')->count() }}</span>
@@ -38,24 +72,9 @@
                             </a>
                         </li>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>
-                        <li class="nav-item">
-                            <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </nav>
-    </div>
-    <div class="search_input" id="search_input_box">
-        <div class="container">
-            <form class="d-flex justify-content-between">
-                <input type="text" class="form-control" id="search_input" placeholder="Search Here">
-                <button type="submit" class="btn"></button>
-                <span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
-            </form>
-        </div>
     </div>
 </header>
 <!-- End Header Area -->

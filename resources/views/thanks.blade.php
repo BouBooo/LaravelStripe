@@ -27,10 +27,10 @@
                 <div class="details_item">
                     <h4>Order Info</h4>
                     <ul class="list">
-                        <li><a href="#"><span>Order number</span> : 60235</a></li>
-                        <li><a href="#"><span>Date</span> : Los Angeles</a></li>
-                        <li><a href="#"><span>Total</span> : USD 2210</a></li>
-                        <li><a href="#"><span>Payment method</span> : Check payments</a></li>
+                        <li><a href="#"><span>Order number</span> : {{ $order->id }}</a></li>
+                        <li><a href="#"><span>Date</span> : {{ $order->created_at }}</a></li>
+                        <li><a href="#"><span>Total</span> : USD {{ round($order->paiement_total, 2) }}</a></li>
+                        <li><a href="#"><span>Payment method</span> : Stripe</a></li>
                     </ul>
                 </div>
             </div>
@@ -38,10 +38,10 @@
                 <div class="details_item">
                     <h4>Billing Address</h4>
                     <ul class="list">
-                        <li><a href="#"><span>Street</span> : 56/8</a></li>
-                        <li><a href="#"><span>City</span> : Los Angeles</a></li>
-                        <li><a href="#"><span>Country</span> : United States</a></li>
-                        <li><a href="#"><span>Postcode </span> : 36952</a></li>
+                        <li><a href="#"><span>Address</span> : {{ $order->paiement_address }}</a></li>
+                        <li><a href="#"><span>City</span> : {{ $order->paiement_city }}</a></li>
+                        <li><a href="#"><span>Country</span> : {{ $order->paiement_country }}</a></li>
+                        <li><a href="#"><span>Postcode </span> : {{ $order->paiement_postalcode }}</a></li>
                     </ul>
                 </div>
             </div>
@@ -49,10 +49,10 @@
                 <div class="details_item">
                     <h4>Shipping Address</h4>
                     <ul class="list">
-                        <li><a href="#"><span>Street</span> : 56/8</a></li>
-                        <li><a href="#"><span>City</span> : Los Angeles</a></li>
-                        <li><a href="#"><span>Country</span> : United States</a></li>
-                        <li><a href="#"><span>Postcode </span> : 36952</a></li>
+                        <li><a href="#"><span>Address</span> : {{ $order->paiement_address }}</a></li>
+                        <li><a href="#"><span>City</span> : {{ $order->paiement_city }}</a></li>
+                        <li><a href="#"><span>Country</span> : {{ $order->paiement_country }}</a></li>
+                        <li><a href="#"><span>Postcode </span> : {{ $order->paiement_postalcode }}</a></li>
                     </ul>
                 </div>
             </div>
@@ -69,71 +69,27 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($products as $product)
                         <tr>
-                            <td>
-                                <p>Pixelstore fresh Blackberry</p>
-                            </td>
-                            <td>
-                                <h5>x 02</h5>
-                            </td>
-                            <td>
-                                <p>$720.00</p>
-                            </td>
+                            <td>{{ $product->model->name }}</td>
+                            <td>x {{ $product->qty }}</td>
+                            <td>$ {{ round($product->model->price * $product->qty, 2) }}</td>
+                        </tr>
+                        @endforeach
+                        <tr>
+                            <td><b>Subtotal</b></td>
+                            <td></td>
+                            <td>$ {{ round($order->paiement_subtotal, 2) }}</td>
                         </tr>
                         <tr>
-                            <td>
-                                <p>Pixelstore fresh Blackberry</p>
-                            </td>
-                            <td>
-                                <h5>x 02</h5>
-                            </td>
-                            <td>
-                                <p>$720.00</p>
-                            </td>
+                            <td><b>Tax</b></td>
+                            <td></td>
+                            <td>$ {{ round($order->paiement_tax, 2) }}</td>
                         </tr>
                         <tr>
-                            <td>
-                                <p>Pixelstore fresh Blackberry</p>
-                            </td>
-                            <td>
-                                <h5>x 02</h5>
-                            </td>
-                            <td>
-                                <p>$720.00</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h4>Subtotal</h4>
-                            </td>
-                            <td>
-                                <h5></h5>
-                            </td>
-                            <td>
-                                <p>$2160.00</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h4>Shipping</h4>
-                            </td>
-                            <td>
-                                <h5></h5>
-                            </td>
-                            <td>
-                                <p>Flat rate: $50.00</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h4>Total</h4>
-                            </td>
-                            <td>
-                                <h5></h5>
-                            </td>
-                            <td>
-                                <p>$2210.00</p>
-                            </td>
+                            <td><b>Total</b></td>
+                            <td></td>
+                            <td>$ {{ round($order->paiement_total, 2) }}</td>
                         </tr>
                     </tbody>
                 </table>

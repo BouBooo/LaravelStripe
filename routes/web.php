@@ -13,6 +13,7 @@
 
 // Main pages
 Route::get('/', 'HomeController@home')->name('home');
+Route::get('/contact', 'HomeController@contact')->name('contact');
 Route::get('/shop', 'ShopController@index')->name('shop.index');
 Route::get('/shop/{product}', 'ShopController@show')->name('shop.show');
 
@@ -36,6 +37,8 @@ Route::get('/payement-success', 'CheckoutController@success')->name('checkout.su
 Route::post('/coupon', 'CouponsController@store')->name('coupon.store');
 Route::delete('/coupon', 'CouponsController@destroy')->name('coupon.destroy');
 
+// Orders
+Route::get('/orders', 'OrderController@orders')->name('orders');
 
 
 Route::group(['prefix' => 'admin'], function () {
@@ -44,7 +47,6 @@ Route::group(['prefix' => 'admin'], function () {
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
 
 
 Route::get('logout', function ()

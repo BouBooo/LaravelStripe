@@ -7,7 +7,7 @@
 		<div class="container">
 			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
 				<div class="col-first">
-					<h1>Shop Category page</h1>
+					<h1>Shop page</h1>
 					<nav class="d-flex align-items-center">
 						<a href="{{ route('home') }}">Home<span class="lnr lnr-arrow-right"></span></a>
 						<a href="{{ route('shop.index') }}">Shop</a>
@@ -72,8 +72,8 @@
 				<!-- Start Filter Bar -->
 				<div class="filter-bar d-flex flex-wrap align-items-center">
 					<div class="dropdown">
-							<a href="{{ route('shop.index', [ 'category' => request()->category, 'sort' => 'low_high']) }}">Low to high</a>
-							<a href="{{ route('shop.index', [ 'category' => request()->category, 'sort' => 'high_low']) }}">High to low</a>
+							<a class="btn" href="{{ route('shop.index', [ 'category' => request()->category, 'sort' => 'low_high']) }}">Low to high</a>
+							<a class="btn" href="{{ route('shop.index', [ 'category' => request()->category, 'sort' => 'high_low']) }}">High to low</a>
 					</div>
 					<div class="pagination ml-auto">
 						{{ $products->appends(request()->input())->links() }}
@@ -97,19 +97,15 @@
 										<h6>$ {{ $product->price }}</h6>
 									</div>
 									<div class="prd-bottom">
-
-										<a href="" class="social-info">
-											<span class="ti-bag"></span>
-											<p class="hover-text">add to bag</p>
-										</a>
-										<a href="" class="social-info">
-											<span class="lnr lnr-heart"></span>
-											<p class="hover-text">Wishlist</p>
-										</a>
-										<a href="" class="social-info">
-											<span class="lnr lnr-move"></span>
-											<p class="hover-text">view more</p>
-										</a>
+										<form action="{{ route('cart.store') }}" method="POST">
+											{{ csrf_field( )}}
+											<input type="hidden" name="id" value="{{ $product->id }}">
+											<input type="hidden" name="name" value="{{ $product->name }}">
+											<input type="hidden" name="price" value="{{ $product->price }}">
+											<button class="btn btn-outline-primary social-info" type="submit">
+												<i class="fas fa-plus"></i>
+											</button>
+										</form>
 									</div>
 								</div>
 							</div>

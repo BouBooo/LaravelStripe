@@ -21,6 +21,7 @@ class CreateOrdersTable extends Migration
             $table->string('paiement_country');
             $table->string('paiement_address');
             $table->string('paiement_city');
+            $table->integer('paiement_postalcode');
             $table->string('paiement_card_name');
             $table->string('paiement_discount')->nullable();
             $table->string('paiement_subtotal');
