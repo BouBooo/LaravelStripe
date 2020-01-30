@@ -15,15 +15,21 @@ class HomeController extends Controller
      */
     public function home()
     {
+        $limit = 8;
         $array = [];
-        $products = Product::take(2)->get();
-        $latestProducts = Product::orderBy('id', 'DESC')->get();
 
+        // News
+        $products = Product::take(2)->get();
+
+        // Latest Products
+        $latestProducts = Product::orderBy('id', 'DESC')->take($limit)->get();
+
+        // Bestsellers
         $orders = OrderProduct::all()->groupBy('product_id');
         foreach($orders as $order) {
             array_push($array, $order[0]->product_id);
         }
-        $bestsellers = Product::whereIn('id', $array)->get();
+        $bestsellers = Product::whereIn('id', $array)->take($limit)->get();
 
         return view('home', [
             'products' => $products,
