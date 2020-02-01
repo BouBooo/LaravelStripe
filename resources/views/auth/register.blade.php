@@ -2,6 +2,9 @@
 
 @section('content')
 
+<!-- Start Banner Area -->
+{!! Breadcrumbs::render('register') !!}
+
 <section class="login_box_area section_gap">
     <div class="container">
         <div class="row">

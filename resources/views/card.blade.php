@@ -2,21 +2,7 @@
 
 @section('content')
 
-<!-- Start Banner Area -->
-<section class="banner-area organic-breadcrumb">
-    <div class="container">
-        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
-            <div class="col-first">
-                <h1>Shopping Cart</h1>
-                <nav class="d-flex align-items-center">
-                    <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-                    <a href="category.html">Cart</a>
-                </nav>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- End Banner Area -->
+{!! Breadcrumbs::render('cart') !!}
 
 <!--================Cart Area =================-->
 <section class="cart_area">
@@ -69,12 +55,7 @@
                             </td>
                             <td>
                                 <div class="product_count"> 
-                                <input type="text" name="qty" id="sst" maxlength="12" value="{{ $product->qty }}" title="Quantity:"
-                                        class="input-text qty">
-                                    <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                                        class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
-                                    <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                                        class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
+                                <input disabled type="text" name="qty" id="sst" maxlength="12" value="x {{ $product->qty }}" title="Quantity:" class="input-text qty">
                                 </div>
                             </td>
                             <td>
@@ -92,6 +73,9 @@
                         </tr>
                         @endforeach
                         <tr>
+                            <td>
+
+                            </td>
                             <td>
 
                             </td>

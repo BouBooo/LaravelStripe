@@ -2,21 +2,7 @@
 
 @section('content')
 
-<!-- Start Banner Area -->
-<section class="banner-area organic-breadcrumb">
-    <div class="container">
-        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
-            <div class="col-first">
-                <h1>Checkout</h1>
-                <nav class="d-flex align-items-center">
-                    <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-                    <a href="single-product.html">Checkout</a>
-                </nav>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- End Banner Area -->
+{!! Breadcrumbs::render('checkout') !!}
 
 <div class="container">
     @if (count($errors) > 0)
@@ -40,20 +26,16 @@
                     <form class="row contact_form" action="{{ route('checkout.store') }}" method="POST" id="payment-form">
                         {{ csrf_field() }}
                         <div class="col-md-6 form-group p_star">
-                            <input type="text" class="form-control" id="email" name="email" value="{{ auth()->user()->email }}" readonly>
-                            <span class="placeholder" data-placeholder="Email Address"></span>
+                            <input type="text" class="form-control" id="email" name="email" value="{{ auth()->user()->email }}" placeholder="Email Address" readonly>
                         </div>
                         <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="province" name="province" required>
-                            <span class="placeholder" data-placeholder="Country"></span>
+                            <input type="text" class="form-control" id="province" name="province" placeholder="Country" required>
                         </div>
                         <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="address" name="address" required>
-                            <span class="placeholder" data-placeholder="Address line 01"></span>
+                            <input type="text" class="form-control" id="address" name="address" placeholder="Address line 01" required>
                         </div>
                         <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="city" name="city" required>
-                            <span class="placeholder" data-placeholder="Town/City"></span>
+                            <input type="text" class="form-control" id="city" name="city" placeholder="Town/City" required>
                         </div>
                         <div class="col-md-12 form-group">
                             <input type="text" class="form-control" id="postalcode" name="postalcode" placeholder="Postcode/ZIP" required>
@@ -62,8 +44,7 @@
                             <div class="creat_account">
                                 <h3>Payement</h3>
                                 <div class="col-md-6 form-group p_star">
-                                    <input type="text" class="form-control" id="name_on_card" name="name_on_card">
-                                    <span class="placeholder" data-placeholder="Name on card"></span>
+                                    <input type="text" class="form-control" id="name_on_card" name="name_on_card" placeholder="Name on card">
                                 </div>
                                 <div class="form-group">
                                     <label for="card-element">Credit card</label>
